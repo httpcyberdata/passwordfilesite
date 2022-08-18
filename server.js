@@ -28,6 +28,10 @@ app.post("/upload", upload.single('file'), async (req, res) => {
 
 app.get("/file/:id", (req, res) => {
     res.send(req.params.id)
+    const file = await File.findById(req.params.id);
+    file.downloadCount++
+    await file.save()
+    console.log(file.downloadCount);
 })
 
 app.listen(process.env.PORT );
